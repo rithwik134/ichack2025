@@ -1,0 +1,157 @@
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    width: 400px;
+    height: 200px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#Header {
+    font-size: 1.7em;
+    color: #e20000;
+    margin-right:auto;
+    margin-left: auto;
+    margin-top: 2em;
+    font-family: 'Aleo';
+    text-align: center;
+    font-weight: bold;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+
+
+#Button_wrapper {
+    text-align: center;
+    background-color: #e20000;
+    border-style: solid;
+    border-color: #e20000;
+    border-radius: 15px;
+    width: 13em;
+    height: 4.5em;
+    box-shadow: 0px 4px 0.5em rgba(0, 0, 0, 0.25);
+    transition: 0.25s;
+    font-family: 'Aleo';
+    text-align: center;
+    margin-inline: auto;
+    margin-block: 0px 0px;
+    transition: 0.25s;
+    color: #FFFFFF;
+    display: 'block'
+}
+
+#Button_wrapper:hover {
+    background-color: #FFFFFF;
+    transition: 0.25s;
+    color: #e20000;
+}
+
+#Button_wrapper:active {
+    box-shadow: 0px 2px 0.5em rgba(0,0,0,0.75);
+    transform: translateY(4px);  /* Even darker when clicked */
+}
+
+#Button Click {
+    font-size: 20em;
+    margin-block: 0px 0px;
+}
+
+#Loading {
+    text-align: center;
+    position: absolute;
+    z-index: 1000;
+    height:100%;
+    width:100%;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    min-height:2em;
+    cursor: wait;
+    overflow:hidden;
+}
+
+#Loading_Overlay {
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: #FDFDFD;
+}
+
+#Loading_Message {
+    top: 50%;
+    z-index: 1001;
+    left: 0;
+    right: 0;
+    text-align: center;
+    transform: translateY(-50%);
+    position: absolute;
+}
+
+#Loading_Words {
+    color: #0F0F43;
+    font-family: "Aleo";
+    font-size:2em;
+    font-weight: bold;
+}
+
+#Loading_Indicator {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    animation: spin 1s linear infinite;
+}
+
+#Loading_Circle {
+    fill: none;
+    stroke: rgba(55, 3, 107, 0.5);
+    stroke-linecap: round;
+    stroke-width: 8;
+    animation: draw 3s ease-in-out infinite;
+
+}
+
+#result {
+    color: #0F0F43;
+    font-family: "Aleo";
+    font-size: small;
+    /* text-align: center; */
+    font-weight: bold;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+
+@keyframes draw {
+    0% {
+      stroke-dasharray: 20, 282.6;
+    }
+    50% {
+      stroke-dasharray: 200, 282.6;
+    }
+    100% {
+      stroke-dasharray: 20, 282.6;
+    }
+}
+   
+@keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+}
