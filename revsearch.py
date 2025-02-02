@@ -2,8 +2,7 @@ import requests
 from flask import Flask, jsonify, request
 from bs4 import BeautifulSoup
 
-PRIMARY = ' Profile Sections Local tv Featured More From NBC Follow NBC News news Alerts There are no new alerts at this time After shares of Tesla dipped by more than 10% on Tuesday deepening a year-long selloff, CEO Elon Musk told employees not to be “too bothered by stock market craziness.” Musk circulated the comments on Wednesday in a companywide email, which CNBC obtained. He told staffers that Tesla needs to “demonstrate continued excellent performance,” and that “long-term, I believe very much that Tesla will be the most valuable company on Earth!” Electric vehicle blog Electrek reported earlier on the email. Tesla shares have declined about 68% for the year, though they rose 3.3% on Wednesday to $112.71. The stock is down 42% in December, and is poised to close out its worst month, quarter and year on record . Musk has blamed Tesla’s declining share price in part on rising interest rates. But critics point to his Twitter takeover as a bigger culprit for the slide, which has wiped out about $675 billion in market cap this year as of Wednesday’s close. In the email, Musk thanked Tesla employees for their work in 2022, encouraged them to push hard for a strong fourth-quarter finish, and asked them to “volunteer to help deliver” cars to customers before midnight on Dec. 31, if at all possible. During the last days of most quarters, Tesla enlists employees from all over the company to bring new cars to customers in order to hit or exceed stated delivery goals, work that in normal times is limited to people on the sales and delivery teams. The company has been aiming for 50% year-over-year growth in vehicle deliveries but has cautioned investors it may not meet that target every year. Musk’s attention has been focused on Twitter of late. The Tesla and SpaceX CEO sold tens of billions of dollars worth of shares in his electric vehicle company in 2022 to finance the $44 billion buyout of the social media company. ©\xa02025 NBCUniversal Media, LLC'
-url = "https://i.imgur.com/5bGzZi7.jpg"
+
 def scrape_text(url):
     try:
         response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
@@ -18,11 +17,25 @@ def scrape_text(url):
         text_list = [p.get_text(separator=' ', strip=True) for p in p_tags]
         text = " ".join(text_list)
 
-        return text
+        # Find the first <img> tag
+        img_tag = soup.find("img")
+        
+        img_url = None
+        if img_tag and 'src' in img_tag.attrs:
+            img_url = img_tag['src']
+            # Handle relative URLs
+            if not img_url.startswith(('http://', 'https://')):
+                from urllib.parse import urljoin
+                img_url = urljoin(url, img_url)
+
+        return (text, img_url)
     except requests.exceptions.RequestException as e:
-        return f"Error: {e}"
+        return (f"Error: {e}", None)
 
 from serpapi import GoogleSearch
+url = input()
+PRIMARY = (scrape_text(url))[0]
+img = (scrape_text(url))[1]
 
 def rev(url):
     # Set up the SerpApi client with the proper parameters
@@ -88,8 +101,6 @@ def status():
 
 @app.route('/process', methods=['GET'])
 def process():
-    url = request.json['image_url']
-    url = scrape_text(request.json['url'])
     return summing(rev(url))
 
 
