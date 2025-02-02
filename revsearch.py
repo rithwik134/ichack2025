@@ -74,7 +74,7 @@ def summing(array):
         genai.configure(api_key="AIzaSyAvE_BFltsv9TFA91ZbFJBUJmtKlj9Gu0Q")
         model = genai.GenerativeModel("gemini-1.5-flash")
         result = model.generate_content(
-            f"You need to compare the content of two articles. One will be the <PRIMARY> article, and the other the <COMPARISON> article.\n\nThe articles will be pasted below as text dumps, scraped from the webpages’ HTML. Consider contextually the **relevant** information from each page, discarding useless info such as headers, text which appears to have been scraped from sidebars, etc.\n\nYour objective is is to compare the relevancy of the two articles. Produce a short summary of no more than 100 words, explaining the topic and content of the <COMPARISON> article. Describe in this whether or not it is directly relevant to the topic of the <PRIMARY> content. For example, if the <PRIMARY> content relates to a forest fire in 2024, but the <COMPARISON> content is about a forest fire in 2021, then explain how the <COMPARISON> content is about a wholly different event and therefore is not relevant. We are doing this to combat the spread of misinformation, which you should consider.\nRespond using pure JSON, with a single field called Summary, into which the summary will be output.\n---n<PRIMARY>\n{PRIMARY}\n<\\PRIMARY>\n\n<COMPARISON>\n{COMPARISON}\n<\\COMPARISON>",
+            f"You need to compare the content of two articles. One will be the <PRIMARY> article, and the other the <COMPARISON> article.\n\nThe articles will be pasted below as text dumps, scraped from the webpages’ HTML. Consider contextually the **relevant** information from each page, discarding useless info such as headers, text which appears to have been scraped from sidebars, etc.\n\nYour objective is is to compare the relevancy of the two articles. Produce a short summary of no more than 100 words, explaining the topic and content of the <COMPARISON> article. Describe in this whether or not it is directly relevant to the topic of the <PRIMARY> content. For example, if the <PRIMARY> content relates to a forest fire in 2024, but the <COMPARISON> content is about a forest fire in 2021, then explain how the <COMPARISON> content is about a wholly different event and therefore is not relevant. We are doing this to combat the spread of misinformation, which you should consider. Consider, for example, whether attributes like locations match between sources; if they don't, it implies a lack of credubility.\nRespond using pure JSON, with a single field called Summary, into which the summary will be output.\n---n<PRIMARY>\n{PRIMARY}\n<\\PRIMARY>\n\n<COMPARISON>\n{COMPARISON}\n<\\COMPARISON>",
             generation_config=genai.GenerationConfig(
                 response_mime_type="application/json", response_schema=Summary
             ),
@@ -91,18 +91,7 @@ def summing(array):
     final_summary = newsumm.candidates[0].content.parts[0].text
     return final_summary
 
-breakpoint()
+def main():
+    print(summing(rev((scrape_text(url))[1])))
 
-app = Flask(__name__)
-
-@app.route('/')
-def status():
-    return jsonify({"status": "ok"})
-
-@app.route('/process', methods=['GET'])
-def process():
-    return summing(rev(url))
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+main()
