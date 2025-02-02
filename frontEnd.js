@@ -14,7 +14,7 @@ async function checkAuthenticity() {
     } else {
         alert("No tab found");
     }
-    // await completeButtonVisibility(true)
+    await completeButtonVisibility(true)
 }
 
 function getImages() {
