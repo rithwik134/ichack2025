@@ -75,8 +75,10 @@ async function loadingButtonVisibility(isRunning) {
 }
 
 async function completeButtonVisibility(complete) {
-    const progress = document.getElementById('Loading')
-    progress.style.display = complete ? 'none' : 'block';
     const result = document.getElementById('result')
     result.style.display = complete ? 'block' : 'none';
+    setTimeout(function(){
+        const progress = document.getElementById('Loading')
+        progress.style.display = complete ? 'none' : 'block';
+    }, 2000);
 }
