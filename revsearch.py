@@ -76,15 +76,3 @@ newsumm = model.generate_content(f"We have been given an image. We found three o
 generation_config=genai.GenerationConfig())
 final_summary = newsumm.candidates[0].content.parts[0].text
 print(final_summary)
-
-@app.route('/')
-def status():
-    return jsonify({"status": "ok"})
-
-@app.route('/process', methods=['GET'])
-def process():
-    image_url = request.json['image_url']
-    url = scrape_text(request.json['url'])
-    return llm(revurl)
-
-app.run(debug=True)
